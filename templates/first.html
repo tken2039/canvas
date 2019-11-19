@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<script type="text/javascript">
+function init(){
+    var canvas = document.getElementById("chokowa");
+    var context = canvas.getContext('2d');
+    context.beginPath();
+    context.arc( 100, 100, 50, 0 * Math.PI / 180, 360 * Math.PI / 180, false ) ;
+    context.fillStyle = "rgba(0, 191, 255, 1.0)" ;
+    // 塗りつぶしを実行
+    context.fill() ;
+    // 線の色
+    context.strokeStyle = "DeepSkyBlue" ;
+    // 線の太さ
+    context.lineWidth = 8 ;
+    // 線を描画を実行
+    context.stroke() ;
+}
+</script>   
+<meta charset="utf-8">
+<title>ＴＵＴＯＲＩＡＬ</title>
+</head>
+<body onload="init();">
+    <canvas id="chokowa" width="500" height="300" style="border:#1C1C1C solid 2px"></canvas>
+</body>
+</html>

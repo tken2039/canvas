@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<script type="text/javascript">
+function init(){
+    var canvas = document.getElementById("mycanvas");
+    var context = canvas.getContext('2d');
+    var drawing = false;
+    var before_x = 0;
+    var before_y = 0;
+    canvas.addEventListener('mousemove', draw_canvas);
+
+    canvas.addEventListener('mousedown', function(e) {
+      drawing = true;
+      var rect = e.target.getBoundingClientRect();
+      before_x = e.clientX - rect.left;
+      before_y = e.clientY - rect.top;
+    });
+
+    canvas.addEventListener('mouseup', function() {
+      drawing = false;
+    });
+
+    function draw_canvas(e) {
+        if (!drawing){
+        return
+        };
+
+        var rect = e.target.getBoundingClientRect();
+        var x = e.clientX - rect.left;
+        var y = e.clientY - rect.top;
+
+        context.lineCap = 'round';
+        context.strokeStyle = 'black';
+        context.lineWidth = '10';
+
+        context.beginPath();
+        context.moveTo(before_x, before_y);
+        context.lineTo(x, y);
+        context.stroke();
+        context.closePath();
+
+        before_x = x;
+        before_y = y;
+    }
+
+    var pen = document.getElementById('pencil');
+    var era = document.getElementById('eraser');
+    // 鉛筆と消しゴムの切り替え
+    init.tool = function(btnNum){
+    // クリックされボタンが鉛筆だったら
+      if (btnNum == 1){
+        context.globalCompositeOperation = 'source-over';
+        pen.className = 'active';
+        era.className = '';
+      }
+    // クリックされボタンが消しゴムだったら
+      else if (btnNum == 2){
+        context.globalCompositeOperation = 'destination-out';
+        pen.className = '';
+        era.className = 'active';
+      }
+    }
+}
+</script>   
+<meta charset="utf-8">
+<title>ＴＵＴＯＲＩＡＬ</title>
+</head>
+<body onload="init();">
+    <h1>CANVAS TUTORIAL</h1>
+    <section>
+        <canvas id="mycanvas" width="500" height="300" style="border:#1C1C1C solid 2px"></canvas>
+        <p>Let's drowing!</p>
+    </section>
+
+    <section>
+        <input type="button" value="ペン" id="pencil" class="active" onClick="init.tool(1)">
+        <input type="button" value="消しゴム" id="eraser" onClick="init.tool(2)">
+    </section>
+</body>
+</html>

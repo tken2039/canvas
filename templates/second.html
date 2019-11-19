@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<script type="text/javascript">
+function init(){
+    var canvas = document.getElementById("chokowa");
+    var context = canvas.getContext('2d');
+    var drawing = false;
+    var before_x = 0;
+    var before_y = 0;
+    canvas.addEventListener('mousemove', draw_canvas);
+    canvas.addEventListener('mousedown', function(e) {
+      drawing = true;
+      var rect = e.target.getBoundingClientRect();
+      before_x = e.clientX - rect.left;
+      before_y = e.clientY - rect.top;
+    });
+    canvas.addEventListener('mouseup', function() {
+      drawing = false;
+    });
+    function draw_canvas(e) {
+        if (!drawing){
+        return
+        };     
+        var rect = e.target.getBoundingClientRect();
+        var x = e.clientX - rect.left;
+        var y = e.clientY - rect.top;       
+        context.lineCap = 'round';
+        context.strokeStyle = 'black';
+        context.lineWidth = '10';  
+        context.beginPath();
+        context.moveTo(before_x, before_y);
+        context.lineTo(x, y);
+        context.stroke();
+        context.closePath();
+        //追記！
+        before_x = x;
+        before_y = y;
+    }
+}
+</script>   
+<meta charset="utf-8">
+<title>ＴＵＴＯＲＩＡＬ</title>
+</head>
+<body onload="init();">
+    <h1>CANVAS TUTORIAL</h1>
+    <canvas id="chokowa" width="500" height="300" style="border:#1C1C1C solid 2px"></canvas>
+    <p>Let's drowing!</p>
+</body>
+</html>
